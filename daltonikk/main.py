@@ -11,7 +11,7 @@ def start(msg):
 def send_webapp_button(cid):
     markup = InlineKeyboardMarkup()
     markup.add(InlineKeyboardButton(text="Тест на дальтонизм", url="https://github.com/ruxenwdar/bothoho.git"))
+    markup.add(InlineKeyboardButton(text="Тест на IQ", url="https://github.com/ruxenwdar/bothoho.git"))
+    markup.add(InlineKeyboardButton(text="Тест на психику", url="https://github.com/ruxenwdar/bothoho.git"))
     bot.send_message(cid, "Наши тесты:", reply_markup=markup)
-    markup.add(InlineKeyboardButton(text="Тест на IQ", url="https://github.com/ruxenwdar/bothoho.git"))
-    markup.add(InlineKeyboardButton(text="Тест на IQ", url="https://github.com/ruxenwdar/bothoho.git"))
 bot.polling(none_stop=True)
