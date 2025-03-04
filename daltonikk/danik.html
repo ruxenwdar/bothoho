@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IQ Тест</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; }
+        .container { width: 60%; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); }
+        .question { margin-bottom: 20px; font-size: 18px; }
+        .btn-container { display: flex; flex-direction: column; align-items: center; }
+        button { width: 80%; padding: 10px; margin: 5px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; background: #e0e0e0; }
+        .selected { background-color: #4CAF50; color: white; }
+        .result { font-size: 20px; font-weight: bold; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IQ Тест</h1>
+        <div id="test"></div>
+        <button onclick="checkResult()" style="background: #007BFF; color: white;">Проверить результат</button>
+        <h2 id="result" class="result"></h2>
+    </div>
+
+    <script>
+        const questions = [
+            { q: 'Что лишнее: яблоко, банан, морковь, виноград?', o: ['яблоко', 'банан', 'морковь', 'виноград'], a: 'морковь' },
+            { q: 'Продолжите ряд: 2, 4, 8, 16, ...', o: ['24', '32', '36', '40'], a: '32' },
+            { q: 'Сколько углов у пятиугольника?', o: ['3', '4', '5', '6'], a: '5' },
+            { q: 'Сколько месяцев в году имеют 28 дней?', o: ['1', '6', '12', '8'], a: '12' },
+            { q: 'Что тяжелее: 1 кг ваты или 1 кг железа?', o: ['вата', 'железо', 'одинаково', 'не знаю'], a: 'одинаково' },
+            { q: 'Какая планета самая большая в Солнечной системе?', o: ['Земля', 'Марс', 'Юпитер', 'Венера'], a: 'Юпитер' },
+            { q: 'Сколько сторон у куба?', o: ['4', '6', '8', '12'], a: '6' },
+            { q: 'Что из этого является простым числом?', o: ['9', '15', '17', '21'], a: '17' },
+            { q: 'Какое слово является антонимом слова "горячий"?', o: ['теплый', 'ледяной', 'холодный', 'жаркий'], a: 'холодный' },
+            { q: 'Какое число следует за 1, 1, 2, 3, 5, 8, ...?', o: ['10', '11', '12', '13'], a: '13' },
+            { q: 'Какой химический элемент обозначается символом O?', o: ['Кислород', 'Золото', 'Серебро', 'Олово'], a: 'Кислород' },
+            { q: 'Кто написал "Преступление и наказание"?', o: ['Толстой', 'Достоевский', 'Чехов', 'Гоголь'], a: 'Достоевский' },
+            { q: 'Как называется столица Франции?', o: ['Берлин', 'Лондон', 'Париж', 'Рим'], a: 'Париж' },
+            { q: 'Какая фигура имеет 4 равные стороны?', o: ['Круг', 'Треугольник', 'Квадрат', 'Прямоугольник'], a: 'Квадрат' },
+            { q: 'Какой орган отвечает за циркуляцию крови в организме?', o: ['Легкие', 'Печень', 'Сердце', 'Почки'], a: 'Сердце' },
+            { q: 'Сколько секунд в одной минуте?', o: ['30', '45', '60', '90'], a: '60' },
+            { q: 'Какая планета ближе всех к Солнцу?', o: ['Земля', 'Марс', 'Венера', 'Меркурий'], a: 'Меркурий' },
+            { q: 'Какой газ необходим человеку для дыхания?', o: ['Азот', 'Кислород', 'Углекислый газ', 'Гелий'], a: 'Кислород' },
+            { q: 'Кто является автором картины "Мона Лиза"?', o: ['Микеланджело', 'Рембрандт', 'Леонардо да Винчи', 'Ван Гог'], a: 'Леонардо да Винчи' },
+            { q: 'Как называется столица России?', o: ['Киев', 'Москва', 'Санкт-Петербург', 'Минск'], a: 'Москва' }
+        ];
+
+        const testDiv = document.getElementById("test");
+        let answers = Array(questions.length).fill(null);
+
+        questions.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.classList.add("question");
+            const p = document.createElement("p");
+            p.innerText = q.q;
+            div.appendChild(p);
+            
+            const btnContainer = document.createElement("div");
+            btnContainer.classList.add("btn-container");
+            
+            q.o.forEach(option => {
+                const btn = document.createElement("button");
+                btn.innerText = option;
+                btn.onclick = () => {
+                    answers[index] = option;
+                    const buttons = btnContainer.getElementsByTagName("button");
+                    for (let b of buttons) {
+                        b.classList.remove("selected");
+                    }
+                    btn.classList.add("selected");
+                };
+                btnContainer.appendChild(btn);
+            });
+            div.appendChild(btnContainer);
+            testDiv.appendChild(div);
+        });
+
+        function checkResult() {
+            let score = answers.filter(ans => ans === 'Ответ 3').length;
+            let iq = 80 + score * 2;
+            document.getElementById("result").innerText = "Ваш предполагаемый IQ: " + iq;
+        }
+    </script>
+</body>
+</html>

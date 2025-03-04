@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест на дальтонизм</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; }
+        .container { width: 60%; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); }
+        .question { margin-bottom: 20px; font-size: 18px; }
+        img { width: 200px; height: auto; display: block; margin: 0 auto 10px; }
+        .btn-container { display: flex; flex-direction: column; align-items: center; }
+        button { width: 80%; padding: 10px; margin: 5px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; background: #e0e0e0; }
+        .selected { background-color: #4CAF50; color: white; }
+        .result { font-size: 20px; font-weight: bold; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Тест на дальтонизм</h1>
+        <div id="test"></div>
+        <button onclick="checkResult()" style="background: #007BFF; color: white;">Проверить результат</button>
+        <h2 id="result" class="result"></h2>
+    </div>
+
+    <script>
+        const questions = [
+            { image: '1.jpg', options: ['12', '8', '5'], answer: '12' },
+            { image: '2.jpg', options: ['3', '8', '6'], answer: '8' },
+            { image: '3.jpg', options: ['6', '9', '15'], answer: '6' },
+            { image: '4.jpg', options: ['42', '74', '10'], answer: '42' },
+            { image: '5.jpg', options: ['3', '16', '42'], answer: '3' }
+        ];
+
+        const testDiv = document.getElementById("test");
+        let answers = Array(questions.length).fill(null);
+
+        questions.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.classList.add("question");
+            
+            const img = document.createElement("img");
+            img.src = q.image;
+            div.appendChild(img);
+            
+            const btnContainer = document.createElement("div");
+            btnContainer.classList.add("btn-container");
+            
+            q.options.forEach(option => {
+                const btn = document.createElement("button");
+                btn.innerText = option;
+                btn.onclick = () => {
+                    answers[index] = option;
+                    const buttons = btnContainer.getElementsByTagName("button");
+                    for (let b of buttons) {
+                        b.classList.remove("selected");
+                    }
+                    btn.classList.add("selected");
+                };
+                btnContainer.appendChild(btn);
+            });
+            div.appendChild(btnContainer);
+            testDiv.appendChild(div);
+        });
+
+        function checkResult() {
+            let score = answers.filter((ans, idx) => ans === questions[idx].answer).length;
+            document.getElementById("result").innerText = "Вы ответили правильно на " + score + " из " + questions.length + " вопросов.";
+        }
+    </script>
+</body>
+</html>
